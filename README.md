@@ -64,6 +64,12 @@ $ git clone https://github.com/rubensdimasjr/gmfarm.git
 
 <hr />
 
+#### Adicionando as dependências do projeto (Após instalação do **Composer**)
+
+1. Utilizando um terminal (git bash ou cmd) dentro da pasta **gmfarm-main** > execute o comando: *composer install* > *composer dump-autoload -o* (para instalar as depedências e atualizá-las)
+
+<hr />
+
 #### Alterando as variáveis de ambiente
 
 1. Acesse seu editor de código com o repositório do projeto > vá até > **.env.example** > copie o arquivo e crie um **.env** > altere os dados e acesse sua **URL**.
