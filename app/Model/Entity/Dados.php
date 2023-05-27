@@ -16,6 +16,6 @@ class Dados
    */
   public static function getDados($where = null, $order = null, $limit = null, $fields = '*')
   {
-    return (new Database())->selectStats($where, $order, $limit, $fields);
+    return (new Database('usuario'))->select($where, $order, $limit, $fields);
   }
 }
