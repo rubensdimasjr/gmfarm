@@ -1,0 +1,117 @@
+'<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+</style>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light">
+  <div class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mt-3 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{URL}}">HOME</a>
+        </li>
+<!--         <li class="nav-item">
+          <a class="nav-link" href="#">CONTATO</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{URL}}/termos">TERMOS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">SUPORTE</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="row text-center">
+  <form method="post" class="col-10 col-md-6 col-lg-2 mx-auto">
+    <img
+      class="mb-4"
+      src="{{URL}}/resources/images/Vertical-Colorida.jpg"
+      alt="Uniceplac"
+      width="180"
+      height="180"
+    />
+
+    {{status}}
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        id="floatingInput"
+        name="emailOuMatricula"
+        placeholder="E-mail ou matrícula"
+        required
+      />
+    </div>
+    <div class="input-group mb-3">
+      <input
+        type="password"
+        class="form-control form-control-lg"
+        id="floatingPassword"
+        placeholder="Senha"
+        name="senha"
+        required
+      />
+      <span class="input-group-text seePassword">
+        <i class="bi bi-eye-slash" id="iconEye"></i>
+      </span>
+    </div>
+
+    <div class="mb-3">
+      <a href="{{URL}}/esqueci">Redefinir senha</a>
+    </div>
+
+    <div class="mb-3">
+      <a href="{{URL}}/cadastro">Realizar cadastro</a>
+    </div>
+    <button class="w-100 btn btn-lg text-white" style="background-color: #017550;" type="submit">Entrar</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022–presente</p>
+  </form>
+</main>
