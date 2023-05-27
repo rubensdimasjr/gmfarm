@@ -48,7 +48,7 @@ $ git clone https://github.com/rubensdimasjr/gmfarm.git
 
 #### Importando o banco(SQL) no phpMyAdmin (ou qualquer interface gráfica)
 
-1. Com o **XAMPP** ligado, Realize Login no phpMyAdmin (localhost/phpmyadmin)
+1. Com o **XAMPP** ligado (ou seu servidor PHP), Realize Login no phpMyAdmin (localhost/phpmyadmin)
 
 ![Captura de tela de 2022-05-23 11-16-03](https://user-images.githubusercontent.com/33848110/169839785-5d8ade5a-97c0-4f56-b454-699646cb1d56.png)
 
