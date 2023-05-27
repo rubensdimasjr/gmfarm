@@ -60,13 +60,13 @@ $ git clone https://github.com/rubensdimasjr/gmfarm.git
 
 ![Captura de tela de 2022-05-23 11-23-25](https://user-images.githubusercontent.com/33848110/169841359-e3428670-8f55-4938-8276-de0ecbae7216.png)
 
-4. Escolha o arquivo > **gmfarm.sql** > dentro do repositório > **gmfarm-main** > ou acesse [link](https://github.com/rubensdimasjr/gmfarm/blob/main/gmfarm.sql)
+4. Escolha o arquivo > **gmfarm.sql** > dentro do repositório > **gmfarm** > ou acesse [link](https://github.com/rubensdimasjr/gmfarm/blob/main/gmfarm.sql)
 
 <hr />
 
 #### Adicionando as dependências do projeto (Após instalação do **Composer**)
 
-1. Utilizando um terminal (git bash ou cmd) dentro da pasta **gmfarm-main** > execute o comando: *composer install* *composer dump-autoload -o* (para instalar as depedências e atualizá-las)
+1. Utilizando um terminal (git bash ou cmd) dentro da pasta **gmfarm** > execute o comando: *composer install* *composer dump-autoload -o* (para instalar as depedências e atualizá-las)
 
 <hr />
 
