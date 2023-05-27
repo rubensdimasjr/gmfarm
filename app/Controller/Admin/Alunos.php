@@ -76,21 +76,19 @@ class Alunos extends Page
     $postVars = $request->getPostVars();
 
 
-    $obUserCreated = EntityUser::getUserByMatricula( /* $postVars['matricula'] */'0013970');
+    $obUserCreated = EntityUser::getUserByMatricula($postVars['matricula']);
 
     if ($obUserCreated instanceof User) {
       /* RETORNA PARA PÁGINA DE EDIÇÃO */
       $request->getRouter()->redirect('/admin/alunos?status=notcreated');
     }
 
-    $senhaCrip = password_hash($postVars['senha'], PASSWORD_BCRYPT);
-
-    /* NOVA INSTANCIA DE ESTOQUE */
+    /* NOVA INSTANCIA DE ALUNO */
     $obUser = new EntityUser;
     $obUser->nome = $postVars['nome'];
     $obUser->email = $postVars['email'];
     $obUser->matricula = $postVars['matricula'];
-    $obUser->senha = $senhaCrip;
+    $obUser->senha = password_hash($postVars['senha'], PASSWORD_BCRYPT);
     $obUser->tipo_usuario = 'aluno';
     $obUser->cadastrar();
 

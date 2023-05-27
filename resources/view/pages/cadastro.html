@@ -3,26 +3,26 @@
     <div class="col mt-5">
       <div class="card card-body">
         <form method="POST">
-          <h1 class="text-center mb-4">Envie seu Cadastro</h1>
+          <h1 class="text-center mb-4">Realize seu Cadastro</h1>
           <div class="row mb-3">
             <div class="col-12 col-md-6 mb-3 mb-md-0">
               <label for="nome" class="form-label">Nome</label>
-              <input type="text" class="form-control" required>
+              <input type="text" class="form-control" name="nome" minlength="3" required>
             </div>
             <div class="col-12 col-md-6">
               <label for="email" class="form-label">E-mail</label>
-              <input type="email" class="form-control" required>
+              <input type="email" class="form-control" name="email" required>
             </div>
           </div>
           <div class="row mb-5">
             <div class="col-12 col-md-6 mb-3 mb-md-0">
               <label for="matricula" class="form-label">Matrícula</label>
-              <input type="text" class="form-control" required>
+              <input type="text" class="form-control" name="matricula" minlength="5" required>
             </div>
             <div class="col-12 col-md-6 mb-3 mb-md-0">
               <label for="senha" class="form-label">Senha</label>
               <div class="input-group">
-                <input type="password" id="floatingPassword" class="form-control" required>
+                <input type="password" id="floatingPassword" name="senha" minlength="6" class="form-control" required>
                 <span class="input-group-text seePassword">
                   <i class="bi bi-eye-slash" id="iconEye"></i>
                 </span>

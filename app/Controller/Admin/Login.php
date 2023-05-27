@@ -16,13 +16,14 @@ class Login extends Page
    * @param string $errorMsg
    * @return string 
    */
-  public static function getLogin($request, $errorMsg = null)
+  public static function getLogin($request, $message = null)
   {
     /* STATUS */
-    $status = !is_null($errorMsg) ? Alert::getError($errorMsg) : '';
+    $status = !is_null($message) ? Alert::getError($message) : '';
 
     $content = View::render('admin/login', [
-      'status' => $status
+      'status' => $status,
+      'return' => self::getStatus($request)
     ]);
 
     $style = '../resources/css/index.css';
@@ -75,5 +76,27 @@ class Login extends Page
 
     /* REDIRECIONA O USUARIO PARA TELA DE LOGIN */
     $request->getRouter()->redirect('/admin/login');
+  }
+
+  /**
+   * Método responsável por retornar a mensagem de status
+   * @param \App\Http\Request $request
+   * @return string|void
+   */
+  private static function getStatus($request)
+  {
+
+    /* QUERY PARAMS */
+    $queryParams = $request->getQueryParams();
+
+    /* STATUS */
+    if (!isset($queryParams['status']))
+      return '';
+
+    /* MENSAGENS DE STATUS */
+    switch ($queryParams['status']) {
+      case 'created':
+        return Alert::getSuccess('Seu cadastrado foi enviado! Após aprovação, você poderá realizar login.');
+    }
   }
 }

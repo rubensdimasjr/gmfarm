@@ -32,4 +32,17 @@ class Alert
       'mensagem' => $message
     ]);
   }
+
+  /**
+   * Método responsável por retornar um alerta 
+   * @param string $message
+   * @return string
+   */
+  public static function getMessage($message, $type)
+  {
+    return View::render('admin/alert/status', [
+      'tipo' => $type,
+      'mensagem' => $message
+    ]);
+  }
 }

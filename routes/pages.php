@@ -27,11 +27,17 @@ $obRouter->get('/esqueci', [
   }
 ]);
 
-/* Rota de Esqueceu a senha */
+/* Rotas de Cadastro (Aluno) */
 
 $obRouter->get('/cadastro', [
   function () {
     return new Response(200, Pages\Register::getRegister());
+  }
+]);
+
+$obRouter->post('/cadastro', [
+  function ($request) {
+    return new Response(200, Pages\Register::setRegister($request));
   }
 ]);
 
