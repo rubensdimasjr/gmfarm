@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06-Abr-2023 às 01:25
--- Versão do servidor: 8.0.30
--- versão do PHP: 8.2.0
+-- Tempo de geração: 27-Maio-2023 às 23:47
+-- Versão do servidor: 10.4.24-MariaDB
+-- versão do PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `gmfarm`
 --
+CREATE DATABASE IF NOT EXISTS `gmfarm` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `gmfarm`;
 
 -- --------------------------------------------------------
 
@@ -28,25 +30,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `material` (
-  `id_material` int NOT NULL,
+  `id_material` int(11) NOT NULL,
   `reagente` varchar(255) NOT NULL,
   `lote` varchar(255) NOT NULL,
   `fabricante` varchar(255) NOT NULL,
   `fabricacao` varchar(20) NOT NULL,
   `validade` varchar(20) NOT NULL,
   `embalagem_original` varchar(10) NOT NULL,
-  `quantidade` int NOT NULL,
-  `cas` varchar(255) NOT NULL,
-  `user_id` int NOT NULL
+  `quantidade` int(11) NOT NULL,
+  `cas` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `material`
---
-
-INSERT INTO `material` (`id_material`, `reagente`, `lote`, `fabricante`, `fabricacao`, `validade`, `embalagem_original`, `quantidade`, `cas`, `user_id`) VALUES
-(3, 'Dipirona', '01', 'Neoquimica', '2023-03', '2024-03', 'Sim', 1, '01892', 1),
-(4, 'Dipirona 2', '03', 'Neoquimica', '2023-03', '2023-07', 'Não', 4, '01892asd', 1);
 
 -- --------------------------------------------------------
 
@@ -55,21 +48,13 @@ INSERT INTO `material` (`id_material`, `reagente`, `lote`, `fabricante`, `fabric
 --
 
 CREATE TABLE `paciente` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `contato` varchar(20) NOT NULL,
   `genero` varchar(5) NOT NULL,
-  `situacao` varchar(15) NOT NULL,
-  `user_id` int NOT NULL
+  `situacao` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `paciente`
---
-
-INSERT INTO `paciente` (`id`, `nome`, `email`, `contato`, `genero`, `situacao`, `user_id`) VALUES
-(2, 'Lucas', 'lucas@gmail.com', '61994480357', 'M', 'Indeferido', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +63,7 @@ INSERT INTO `paciente` (`id`, `nome`, `email`, `contato`, `genero`, `situacao`, 
 --
 
 CREATE TABLE `usuario` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `matricula` varchar(20) NOT NULL,
@@ -102,15 +87,13 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `matricula`, `senha`, `tipo_usuari
 -- Índices para tabela `material`
 --
 ALTER TABLE `material`
-  ADD PRIMARY KEY (`id_material`),
-  ADD KEY `USER_CREATE_MATERIAL` (`user_id`);
+  ADD PRIMARY KEY (`id_material`);
 
 --
 -- Índices para tabela `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `USER_CREATE_PATIENT` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `usuario`
@@ -127,35 +110,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `material`
 --
 ALTER TABLE `material`
-  MODIFY `id_material` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restrições para despejos de tabelas
---
-
---
--- Limitadores para a tabela `material`
---
-ALTER TABLE `material`
-  ADD CONSTRAINT `USER_CREATE_MATERIAL` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limitadores para a tabela `paciente`
---
-ALTER TABLE `paciente`
-  ADD CONSTRAINT `USER_CREATE_PATIENT` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
