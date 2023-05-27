@@ -66,6 +66,6 @@ $ git clone https://github.com/rubensdimasjr/gmfarm.git
 
 #### Alterando as variáveis de ambiente
 
-1. Acesse seu editor de código com o repositório do projeto > vá até > **.env** > altere os dados e coloque os do seu ambiente.
+1. Acesse seu editor de código com o repositório do projeto > vá até > **.env.example** > copie o arquivo e crie um **.env** > altere os dados e acesse sua **URL**.
 
 ![Captura de tela de 2022-05-23 14-34-16](https://user-images.githubusercontent.com/33848110/169875788-b76693e9-9a26-41e5-8828-0e8de3ca8b9d.png)
