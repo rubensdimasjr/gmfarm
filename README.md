@@ -66,7 +66,7 @@ $ git clone https://github.com/rubensdimasjr/gmfarm.git
 
 #### Adicionando as dependências do projeto (Após instalação do **Composer**)
 
-1. Utilizando um terminal (git bash ou cmd) dentro da pasta **gmfarm-main** > execute o comando: *composer install* > *composer dump-autoload -o* (para instalar as depedências e atualizá-las)
+1. Utilizando um terminal (git bash ou cmd) dentro da pasta **gmfarm-main** > execute o comando: *composer install* *composer dump-autoload -o* (para instalar as depedências e atualizá-las)
 
 <hr />
 
