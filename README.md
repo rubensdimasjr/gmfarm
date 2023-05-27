@@ -27,8 +27,9 @@
 ### 🌍 Preparação de Ambiente
 
 - Precisa estar instalado no seu Ambiente: [XAMPP](https://www.apachefriends.org/pt_br/index.html) ou <b>PHP, Apache e MySQL</b> separados.
-- Foi utilizado o <b>phpMyAdmin</b> como interface gráfica para o banco.
+- Foi utilizado o <b>phpMyAdmin</b> como interface gráfica para o banco (utilize conforme sua preferência).
 - <b>[Git](https://git-scm.com/)</b> para o versionamento do projeto.
+- <b>Composer</b> para gerenciamento de dependências (<b>[Instalação aqui](https://getcomposer.org/download/)</b>).
 
 #### Começando
 
