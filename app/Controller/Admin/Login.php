@@ -57,6 +57,11 @@ class Login extends Page
       return self::getLogin($request, 'E-mail ou senha inválidos');
     }
 
+    /* VERIFICA ATIVAÇÃO DO LOGIN */
+    if ($obUser->status === 'deactivated') {
+      return self::getLogin($request, 'Seu login não está ativo, aguarde até que um administrador ative seu acesso!');
+    }
+
     /* CRIA SESSÃO DE LOGIN */
     SessionAdminLogin::login($obUser);
 
@@ -97,6 +102,8 @@ class Login extends Page
     switch ($queryParams['status']) {
       case 'created':
         return Alert::getSuccess('Seu cadastrado foi enviado! Após aprovação, você poderá realizar login.');
+      case 'updatedpassword':
+        return Alert::getSuccess('Sua senha foi alterada, tente realizar seu login!');
     }
   }
 }

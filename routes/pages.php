@@ -11,6 +11,18 @@ $obRouter->get('/', [
   }
 ]);
 
+$obRouter->get('/{md5}/redefinicao', [
+  function ($request, $md5) {
+    return new Response(200, Pages\EsqueceuSenha::getRedefinicao($request, $md5));
+  }
+]);
+
+$obRouter->post('/{md5}/redefinicao', [
+  function ($request, $md5) {
+    return new Response(200, Pages\EsqueceuSenha::setRedefinicao($request, $md5));
+  }
+]);
+
 /* Rota de Termos */
 
 $obRouter->get('/termos', [
@@ -24,6 +36,12 @@ $obRouter->get('/termos', [
 $obRouter->get('/esqueci', [
   function () {
     return new Response(200, Pages\EsqueceuSenha::getEsqueceuSenha());
+  }
+]);
+
+$obRouter->post('/esqueci', [
+  function ($request) {
+    return new Response(200, Pages\EsqueceuSenha::setEsqueceuSenha($request));
   }
 ]);
 

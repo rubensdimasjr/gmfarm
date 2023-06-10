@@ -31,7 +31,7 @@
   </div>
   <!-- E-mail -->
   <div class="row mb-3">
-    <div class="col">
+    <div class="col-12 col-md-4 mb-3 mb-md-0">
       <label for="email" class="form-label">E-mail:</label>
       <input
         type="email"
@@ -43,7 +43,7 @@
         required
       />
     </div>
-    <div class="col">
+    <div class="col-12 col-md-4 mb-3 mb-md-0">
       <label for="senha" class="form-label">Nova senha:</label>
       <input
         type="password"
@@ -52,6 +52,21 @@
         id="senha"
         placeholder="Nova senha"
       />
+    </div>
+    <div class="col-12 col-md-4">
+      <label for="status" class="form-label">Status:</label>
+      <div class="form-check">
+        <input class="form-check-input" value="activated" type="radio" name="flexRadioStatus" id="flexRadioDefault1" {{flexRadioStatus1}}>
+        <label class="form-check-label" for="flexRadioDefault1">
+          Ativado
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" value="deactivated" type="radio" name="flexRadioStatus" id="flexRadioDefault2" {{flexRadioStatus2}}>
+        <label class="form-check-label" for="flexRadioDefault2">
+          Desativado
+        </label>
+      </div>
     </div>
   </div>
   <hr />

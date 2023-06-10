@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="row mt-5">
+    <div class="col-lg-4 col-md-6 col-12 mt-5 mx-auto">
+      {{status}}
+      <form method="post">
+        <input type="hidden" name="user_id" value="{{user_id}}">
+        <h2 class="mb-3 text-center">Redefinição de Senha</h2>
+        <label for="floatingPassword" class="form-label">Digite sua nova senha:</label>
+        <div class="input-group mb-3">
+          <input type="password" id="floatingPassword" name="senha" minlength="6" class="form-control" required>
+          <span class="input-group-text seePassword">
+            <i class="bi bi-eye-slash" id="iconEye"></i>
+          </span>
+        </div>
+        <div class="mb-3">
+          <label for="floatingPassword2" class="form-label">Confirme sua nova senha:</label>
+          <input type="password" id="floatingPassword2" name="confirm_senha" minlength="6" class="form-control" required>
+        </div>
+        <div class="mb-3 text-center">
+          <input type="submit" class="btn btn-primary" value="Alterar Senha">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

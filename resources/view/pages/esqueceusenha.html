@@ -1,7 +1,15 @@
 <div class="container mt-5">
   <div class="row mt-5">
-    <div class="col">
-      
+    <div class="col mt-5">
+      {{status}}
+      <form method="post">
+        <h2>Redefinição de Senha</h2>
+        <p>Digite seu e-mail para receber o código de recuperação, <b>caso exista</b>.</p>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="email" placeholder="email@exemplo.com.br" required>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Enviar Código">
+      </form>
     </div>
   </div>
 </div>

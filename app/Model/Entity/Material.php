@@ -85,7 +85,6 @@ class Material
    * @param string $order
    * @param string $limit
    * @param string $fields
-   * @return \PDOStatement 
    */
   public static function getItems($where = null, $order = null, $limit = null, $fields = '*')
   {

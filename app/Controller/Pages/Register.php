@@ -53,6 +53,7 @@ class Register extends Page
     $obUser->matricula = $postVars['matricula'];
     $obUser->senha = password_hash($postVars['senha'], PASSWORD_BCRYPT);
     $obUser->tipo_usuario = 'aluno';
+    $obUser->status = 'deactivated';
     $obUser->cadastrar();
 
 

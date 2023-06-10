@@ -31,7 +31,7 @@ class Alunos extends Page
     $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 20);
 
     /* Resultados da página */
-    $results = EntityUser::getAtributos('tipo_usuario = "aluno"', 'id ASC', $obPagination->getLimit(), ' id, nome, email, matricula');
+    $results = EntityUser::getAtributos('tipo_usuario = "aluno"', 'id ASC', $obPagination->getLimit(), ' id, nome, email, matricula, status');
 
     /* Renderiza o atributo */
     while ($obUser = $results->fetchObject(EntityUser::class)) {
@@ -39,7 +39,8 @@ class Alunos extends Page
         'id' => $obUser->id,
         'nome' => $obUser->nome,
         'email' => $obUser->email,
-        'matricula' => $obUser->matricula
+        'matricula' => $obUser->matricula,
+        'status' => $obUser->status === 'activated' ? 'ativado' : 'desativado'
       ]);
     }
 
@@ -90,10 +91,9 @@ class Alunos extends Page
     $obUser->matricula = $postVars['matricula'];
     $obUser->senha = password_hash($postVars['senha'], PASSWORD_BCRYPT);
     $obUser->tipo_usuario = 'aluno';
+    $obUser->status = 'deactivated';
     $obUser->cadastrar();
 
-    /* RETORNA PARA PÁGINA DE EDIÇÃO */
-    $request->getRouter()->redirect('/admin/alunos/' . $obUser->id . '/edit?status=created');
   }
 
 
@@ -148,7 +148,9 @@ class Alunos extends Page
       'nome' => $obUser->nome,
       'email' => $obUser->email,
       'matricula' => $obUser->matricula,
-      'status' => self::getStatus($request)
+      'status' => self::getStatus($request),
+      'flexRadioStatus1' => $obUser->status === 'activated' ? 'checked' : '',
+      'flexRadioStatus2' => $obUser->status === 'deactivated' ? 'checked' : ''
     ]);
 
     /* RETORNA A PÁGINA */
@@ -186,6 +188,7 @@ class Alunos extends Page
     $obUser->email = $postVars['email'] ?? $obUser->email;
     $obUser->matricula = $postVars['matricula'] ?? $obUser->matricula;
     $obUser->senha = $cripSenha ?? $obUser->senha;
+    $obUser->status = $postVars['flexRadioStatus'] ?? $obUser->status;
     $obUser->atualizar();
 
     /* REDIRECIONA O USUARIO */
