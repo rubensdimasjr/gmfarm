@@ -18,6 +18,7 @@ class Login extends Page
    */
   public static function getLogin($request, $message = null)
   {
+
     /* STATUS */
     $status = !is_null($message) ? Alert::getError($message) : '';
 
@@ -37,6 +38,8 @@ class Login extends Page
   public static function setLogin($request)
   {
 
+    SessionAdminLogin::validateDateExpire($request);
+
     /* POST VARS */
     $postVars = $request->getPostVars();
     $emailOuMatricula = trim($postVars['emailOuMatricula']) ?? '';
@@ -49,16 +52,19 @@ class Login extends Page
 
     /* BUSCA USUARIO PELO EMAIL */
     if (!$obUser instanceof User) {
+      SessionAdminLogin::setErrorLogin();
       return self::getLogin($request, 'E-mail ou senha inválidos');
     }
 
     /* VERIFICA A SENHA DO USUÁRIO */
     if (!password_verify($senha, $obUser->senha)) {
+      SessionAdminLogin::setErrorLogin();
       return self::getLogin($request, 'E-mail ou senha inválidos');
     }
 
     /* VERIFICA ATIVAÇÃO DO LOGIN */
     if ($obUser->status === 'deactivated') {
+      SessionAdminLogin::setErrorLogin();
       return self::getLogin($request, 'Seu login não está ativo, aguarde até que um administrador ative seu acesso!');
     }
 
@@ -104,6 +110,8 @@ class Login extends Page
         return Alert::getSuccess('Seu cadastrado foi enviado! Após aprovação, você poderá realizar login.');
       case 'updatedpassword':
         return Alert::getSuccess('Sua senha foi alterada, tente realizar seu login!');
+      case 'manyattempts':
+        return Alert::getError('Muitas tentativas de login erradas. Tente novamente mais tarde!');
     }
   }
 }
