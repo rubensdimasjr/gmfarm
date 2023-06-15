@@ -14,13 +14,40 @@ $obRouter->get('/admin/receitas', [
   }
 ]);
 
-/* Rota de POST de Receituário */
+/* Rota de GET de Receituário */
 
-$obRouter->post('/admin/receitas', [
+$obRouter->get('/admin/receita/save', [
   'middlewares' => [
     'required-admin-login'
   ],
   function ($request) {
-    return new Response(200, Admin\Receita::setReceita($request));
+    return new Response(200, Admin\Receita::getInsertRecipe($request));
+  }
+]);
+
+$obRouter->post('/admin/receita/save', [
+  'middlewares' => [
+    'required-admin-login'
+  ],
+  function ($request) {
+    return new Response(200, Admin\Receita::setInsertRecipe($request));
+  }
+]);
+
+$obRouter->get('/admin/receita/{id}/generate', [
+  'middlewares' => [
+    'required-admin-login'
+  ],
+  function ($request, $id) {
+    return new Response(200, Admin\Receita::getGenerateRecipeById($request, $id));
+  }
+]);
+
+$obRouter->post('/admin/receita/{id}/generate', [
+  'middlewares' => [
+    'required-admin-login'
+  ],
+  function ($request, $id) {
+    return new Response(200, Admin\Receita::setGenerateRecipeById($request, $id));
   }
 ]);
