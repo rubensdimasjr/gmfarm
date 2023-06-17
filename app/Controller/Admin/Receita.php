@@ -52,10 +52,16 @@ class Receita extends Page
     $results = EntityReceita::getItems(null, 'id_receita DESC', $obPagination->getLimit());
 
     while ($obReceita = $results->fetchObject(EntityReceita::class)) {
+
+      $files = array_diff(scandir(ROOT.'/resources/receitas/'.$obReceita->path), array('.','..'));
+
       $atributos .= View::render('admin/modules/receitas/atributo', [
         'id' => $obReceita->id_receita,
+        'name' => $obReceita->name,
         'criado_por' => $obReceita->created_by,
-        'criado_em' => $obReceita->created_at
+        'criado_em' => date("d/m/Y H:i", strtotime($obReceita->created_at)),
+        'path' => $files ? $obReceita->path.'/'.$files[2] : '',
+        'class' => $obReceita->path !== null ? 'd-inline-block' : 'd-none'
       ]);
     }
 
@@ -82,9 +88,10 @@ class Receita extends Page
     date_default_timezone_set("America/Sao_Paulo");
 
     $obReceita = new EntityReceita();
+    $obReceita->name = $postVars['name'];
     $obReceita->created_by = $_SESSION['admin']['usuario']['nome'];
     $obReceita->created_at = date('Y-m-d H:i');
-    $obReceita->data = json_encode(array($postVars));
+    $obReceita->data = json_encode(array('medicacao' => $postVars['medicacao'], 'obs' => $postVars['obs']), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     $obReceita->cadastrar();
 
     $request->getRouter()->redirect('/admin/receitas?status=created');
@@ -106,11 +113,13 @@ class Receita extends Page
     }
 
     $postVars = $request->getPostVars();
+    date_default_timezone_set("America/Sao_Paulo");
 
+    $titulo = $postVars['name'];
     $inputs = $postVars['medicacao'];
     $obs = array($postVars['obs']);
     $date = array(date('d/M/y'));
-    $time = array(date('H:m'));
+    $time = array(date('H:i'));
 
     $arr = [];
     for ($i = 1; $i <= count($inputs); $i++) {
@@ -125,7 +134,7 @@ class Receita extends Page
     $TBS = new clsTinyButStrong;
     $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
     $template = 'resources/view/admin/modules/receitas/Receituario.docx';
-    $nome = 'Receituario.docx';
+    $nome = "$titulo.docx";
     $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
     $TBS->MergeBlock('blk1', $array_type1);
     $TBS->MergeBlock('blk2', $array_type2);
@@ -135,14 +144,40 @@ class Receita extends Page
     $TBS->PlugIn(OPENTBS_DELETE_COMMENTS);
 
     $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
-    $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $nome);
+    $output_file_name = str_replace('.', '_' . date('YmdHi') . $save_as . '.', $nome);
     if ($save_as === '') {
-      $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name);
-      exit();
+
+      if($obReceita->path !== null)
+      {
+
+        function delTree($dir) { 
+          $files = array_diff(scandir($dir), array('.','..')); 
+          foreach ($files as $file) { 
+            (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file"); 
+          } 
+          return rmdir($dir); 
+        }
+    
+        delTree(ROOT.'/resources/receitas/'.$obReceita->path);
+
+      }
+      
+      $obReceita->name = $titulo;
+      $obReceita->created_by = $_SESSION['admin']['usuario']['nome'];
+      $obReceita->created_at = date('Y-m-d H:i');
+      $obReceita->data = json_encode(array('medicacao' => $postVars['medicacao'], 'obs' => $postVars['obs']), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $obReceita->path = md5(uniqid());
+      $obReceita->atualizar();
+
+      mkdir(ROOT.'/resources/receitas/'.$obReceita->path);
+      
+      $TBS->Show(OPENTBS_FILE,'resources/receitas/'.$obReceita->path.'/'.$output_file_name);
     } else {
       $TBS->Show(OPENTBS_FILE, $output_file_name);
       exit("Arquivo [$output_file_name] já foi criado.");
     }
+
+    $request->getRouter()->redirect('/admin/receitas?status=generated');
   }
 
   /**
@@ -153,10 +188,31 @@ class Receita extends Page
    */
   public static function getGenerateRecipeById($request, $id)
   {
-    echo "<pre>";
-    print_r($request);
-    echo "</pre>";
-    exit;
+    $obReceita = EntityReceita::getRecipeById($id);
+
+    if (!$obReceita instanceof EntityReceita) {
+      $request->getRouter()->redirect('/admin/receitas?status=notfound');
+    }
+
+    $json = json_decode($obReceita->data);
+
+    $dadosReceita = $json;
+
+    $itens = '';
+    foreach($dadosReceita->medicacao as $hash => $value)
+    {
+      $itens .= View::render('admin/modules/receitas/item',[
+        'value' => $value
+      ]);
+    }
+
+    $content = View::render('admin/modules/receitas/gerar',[
+      'itens' => $itens,
+      'obs' => $dadosReceita->obs,
+      'name' => $obReceita->name
+    ]);
+
+    return parent::getPanel('Receitas > GMFARM', $content, 'receitas');
   }
 
   /**
@@ -178,12 +234,12 @@ class Receita extends Page
     switch ($queryParams['status']) {
       case 'created':
         return Alert::getSuccess('Receita cadastrada com sucesso!');
-      case 'updated':
-        return Alert::getSuccess('Dados da receita atualizados com sucesso!');
+      case 'generated':
+        return Alert::getSuccess('Receita gerada com sucesso! Faça o download.');
       case 'deleted':
         return Alert::getSuccess('Receita deletada com sucesso!');
       case 'notfound':
-        return Alert::getSuccess('Receita não encontrada!');
+        return Alert::getError('Receita não encontrada!');
     }
   }
 }

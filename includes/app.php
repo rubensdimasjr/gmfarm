@@ -22,11 +22,13 @@ Database::config(
 
 /* Define a constante de URL */
 define('URL', getenv('URL'));
+define('ROOT', getenv('ROOT'));
 
 
 /* Define o valor padrão das variaveis */
 View::init([
-  'URL' => URL
+  'URL' => URL,
+  'ROOT' => ROOT
 ]);
 
 /* Define o mapeamento de middlewares */

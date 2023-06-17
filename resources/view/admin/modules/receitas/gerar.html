@@ -50,7 +50,9 @@
             <div class="mb-3 d-flex justify-content-end">
               <button class="btn btn-success botao">Adicionar</button>
             </div>
-            <div class="lista"></div>
+            <div class="lista">
+              {{itens}}
+            </div>
             <div class="my-3">
               <label for="obs" class="form-label">Observações: </label>
               <textarea
@@ -58,8 +60,14 @@
                 class="form-control"
                 id="obs"
                 rows="5"
+                minlength="6"
+
                 required
-              ></textarea>
+              >{{obs}}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Titulo:</label>
+              <input type="text" minlength="6" id="name" class="form-control" value="{{name}}" name="name" required>
             </div>
             <div class="mb-2 d-flex justify-content-center">
               <input type="submit" class="btn btn-primary gerar" value="Gerar Receita">
@@ -79,6 +87,7 @@
   let botao = $(".botao");
   let input = $(".input");
   let lista = $(".lista");
+  var btnExclui = $(".btnExclui");
 
   // QUANDO CLICA NO BOTÃO DE ADICIONAR
   $(botao).click(function (e) {
@@ -118,7 +127,7 @@
 
         $(
           '<div class="input-group mb-3">' +
-            '<input type="text" class="form-control" name="medicacao[]" id="medicacao" value="' +
+            '<input type="text" class="form-control" minlength="6" name="medicacao[]" id="medicacao" value="' +
             input[0].value +
             ", " +
             input[1].value +
@@ -133,18 +142,28 @@
       $.each(input, function (i, v) {
         input[i].value = "";
       });
+    }
 
-      let btnExclui = $(".btnExclui");
+    var btnExclui = $(".btnExclui");
 
       //QUANDO CLICA BOTÃO EXCLUIR
-      $.each(btnExclui, function (k, v) {
-        $(v).click((e) => {
-          botaoAtual = e.currentTarget;
-          divBotao = botaoAtual.parentNode;
-          divBotao.remove();
-        });
+    $.each(btnExclui, function (k, v) {
+      $(v).click((e) => {
+        botaoAtual = e.currentTarget;
+        divBotao = botaoAtual.parentNode;
+        divBotao.remove();
       });
-    }
+    });
+
+  });
+
+  //QUANDO CLICA BOTÃO EXCLUIR
+  $.each(btnExclui, function (k, v) {
+    $(v).click((e) => {
+      botaoAtual = e.currentTarget;
+      divBotao = botaoAtual.parentNode;
+      divBotao.remove();
+    });
   });
 
   $(".gerar").click(function (e) {

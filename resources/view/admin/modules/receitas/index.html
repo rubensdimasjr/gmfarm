@@ -6,19 +6,22 @@
       <div class="d-flex justify-content-start">
         <a href="{{URL}}/admin/receita/save" class="btn btn-success">Cadastrar Receita</a>
       </div>
-      <table class="table mt-3">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Criado por</th>
-            <th scope="col">Criado em</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{atributos}}
-        </tbody>
-      </table>
+      <div class="table-responsive mt-3">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Modificado por</th>
+              <th scope="col">Modificado em</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{atributos}}
+          </tbody>
+        </table>
+      </div>
       {{pagination}}
     </div>
   </div>
