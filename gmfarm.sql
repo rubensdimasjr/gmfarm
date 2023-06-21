@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Maio-2023 às 23:47
+-- Tempo de geração: 22-Jun-2023 às 01:06
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `gmfarm`
 --
-CREATE DATABASE IF NOT EXISTS `gmfarm` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `gmfarm`;
 
 -- --------------------------------------------------------
 
@@ -59,6 +57,34 @@ CREATE TABLE `paciente` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `receita`
+--
+
+CREATE TABLE `receita` (
+  `id_receita` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `created_by` varchar(255) NOT NULL,
+  `created_at` varchar(20) NOT NULL,
+  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`data`)),
+  `path` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `recuperacao`
+--
+
+CREATE TABLE `recuperacao` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_expire` varchar(25) NOT NULL,
+  `md5` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuario`
 --
 
@@ -68,16 +94,9 @@ CREATE TABLE `usuario` (
   `email` varchar(255) NOT NULL,
   `matricula` varchar(20) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `tipo_usuario` varchar(10) NOT NULL DEFAULT 'aluno'
+  `tipo_usuario` varchar(10) NOT NULL DEFAULT 'aluno',
+  `status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `usuario`
---
-
-INSERT INTO `usuario` (`id`, `nome`, `email`, `matricula`, `senha`, `tipo_usuario`) VALUES
-(1, 'Admin', 'admin@gmail.com', '0013970', '$2y$10$c47NbrGr3Cr4p8uvtQHkcuHKIjhvPGIjr1U0jaGtiHyRvdsZUBjwu', 'admin'),
-(2, 'Aluno Teste', 'teste@teste.com', '0013970', '$2y$10$xj0MSSCxXBD6fkSiGfyUlu2/FVNc31HEWRm4aYhi7KlPb2o5DjzFG', 'aluno');
 
 --
 -- Índices para tabelas despejadas
@@ -96,6 +115,18 @@ ALTER TABLE `paciente`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `receita`
+--
+ALTER TABLE `receita`
+  ADD PRIMARY KEY (`id_receita`);
+
+--
+-- Índices para tabela `recuperacao`
+--
+ALTER TABLE `recuperacao`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `usuario`
 --
 ALTER TABLE `usuario`
@@ -110,19 +141,31 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `material`
 --
 ALTER TABLE `material`
-  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `receita`
+--
+ALTER TABLE `receita`
+  MODIFY `id_receita` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `recuperacao`
+--
+ALTER TABLE `recuperacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
